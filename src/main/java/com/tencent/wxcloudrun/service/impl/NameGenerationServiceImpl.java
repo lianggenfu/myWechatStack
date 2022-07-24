@@ -32,9 +32,9 @@ public class NameGenerationServiceImpl implements NameGenerationService {
         for (int i = 0; i < number ; i++) {
             StringBuffer sb = new StringBuffer(surName);
             int midRandom = (int) (Math.random() * midLength);
-            midRandom = (midRandom*i*1000)%midLength;
+            midRandom = (midRandom*(i+1)*1000)%midLength;
             int lastRandom = (int) (Math.random() * lastLength);
-            lastRandom = (lastRandom*i*1000)%lastLength;
+            lastRandom = (lastRandom*(i+1)*1000)%lastLength;
             sb.append(mid[midRandom]).append(last[lastRandom]);
             result.add(sb.toString());
         }
