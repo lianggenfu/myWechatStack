@@ -25,7 +25,7 @@ public class NameController {
      */
     @GetMapping(value = "/api/getName")
     ApiResponse get(String surName,int sexType,int count) {
-        logger.info("/api/count get request");
+        logger.info("/api/count get request,surName:{},sexType:{},count:{}",surName,sexType,count);
         //int sexType = 2; //1:男孩 2:女孩
         List<String> names = nameGenerationService.getName(surName,sexType,count);
         for (int i = 0; i <names.size() ; i++) {
