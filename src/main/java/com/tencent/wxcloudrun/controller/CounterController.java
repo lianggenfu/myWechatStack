@@ -37,10 +37,16 @@ public class CounterController {
    * 获取当前计数
    * @return API response json
    */
-  @PostMapping(value = "/api/count")
-  ApiResponse post(@RequestBody JSONObject jsonObject) {
-    logger.info("/api/count get request:{}",jsonObject);
-    return ApiResponse.ok();
+  @GetMapping(value = "/api/count")
+  ApiResponse get() {
+    logger.info("/api/count get request");
+    Optional<Counter> counter = counterService.getCounter(1);
+    Integer count = 0;
+    if (counter.isPresent()) {
+      count = counter.get().getCount();
+    }
+
+    return ApiResponse.ok(count);
   }
 
 
@@ -49,7 +55,7 @@ public class CounterController {
    * @param request {@link CounterRequest}
    * @return API response json
    */
-  /*@PostMapping(value = "/api/count")
+  @PostMapping(value = "/api/count")
   ApiResponse create(@RequestBody CounterRequest request) {
     logger.info("/api/count post request, action: {}", request.getAction());
 
@@ -73,6 +79,6 @@ public class CounterController {
     } else {
       return ApiResponse.error("参数action错误");
     }
-  }*/
+  }
   
 }
