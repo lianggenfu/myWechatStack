@@ -7,6 +7,7 @@ import com.tencent.wxcloudrun.dto.CounterRequest;
 import com.tencent.wxcloudrun.model.Counter;
 import com.tencent.wxcloudrun.service.CounterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,8 +38,8 @@ public class CounterController {
    * @return API response json
    */
   @PostMapping(value = "/api/count")
-  ApiResponse post(@RequestBody CounterRequest counterRequest) {
-    logger.info("/api/count get request");
+  ApiResponse post(@RequestBody JSONObject jsonObject) {
+    logger.info("/api/count get request:{}",jsonObject);
     return ApiResponse.ok();
   }
 
