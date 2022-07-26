@@ -72,16 +72,21 @@ public class WxServiceImpl implements WxService {
         if("取名".equals(content)){
             return "请输入姓氏,性别(逗号隔开)";
         }
-        if(content.contains(",")){
-            String[] strs = content.split(",");
-            if(strs[1].equals("男")){
-                return nameGenerationService.getName(strs[0],1,1).get(0);
-            }else if(strs[1].equals("女")){
-                return nameGenerationService.getName(strs[0],2,1).get(0);
-            }else{
-                return "格式异常！\n" +
-                        "eg: 梁,女";
+        try {
+            if (content.contains(",")) {
+                String[] strs = content.split(",");
+                if (strs[1].equals("男")) {
+                    return nameGenerationService.getName(strs[0], 1, 1).get(0);
+                } else if (strs[1].equals("女")) {
+                    return nameGenerationService.getName(strs[0], 2, 1).get(0);
+                } else {
+                    return "格式异常！\n" +
+                            "eg: 梁,女";
+                }
             }
+        }catch (Exception e){
+            logger.error("异常对话：{}",content);
+            e.printStackTrace();
         }
         if("取名内测链接".equals(content)){
             return "取名链接: "+ "https://springboot-jhx8-1412-4-1313045077.sh.run.tcloudbase.com/index.html";
