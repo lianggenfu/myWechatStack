@@ -4,6 +4,7 @@ import com.tencent.wxcloudrun.config.ApiResponse;
 import com.tencent.wxcloudrun.dto.CounterRequest;
 import com.tencent.wxcloudrun.model.Counter;
 import com.tencent.wxcloudrun.service.CounterService;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +36,9 @@ public class CounterController {
    * @return API response json
    */
   @GetMapping(value = "/api/count")
-  ApiResponse get() {
+  ApiResponse get(@Param("id") int id) {
     logger.info("/api/count get request");
-    Optional<Counter> counter = counterService.getCounter(1);
+    Optional<Counter> counter = counterService.getCounter(id);
     Integer count = 0;
     if (counter.isPresent()) {
       count = counter.get().getCount();
