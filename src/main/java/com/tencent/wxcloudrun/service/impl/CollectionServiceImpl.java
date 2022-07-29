@@ -16,21 +16,22 @@ public class CollectionServiceImpl implements CollectionService {
 
     @Override
     public List<CollectionModel> selectByUserId(String userId) {
-        return null;
+        return collectionMapper.selectByUserId(userId);
     }
 
     @Override
     public int insert(CollectionModel collectionModel) {
-        return 0;
+        return collectionMapper.insert(collectionModel);
     }
 
     @Override
     public int update(CollectionModel collectionModel) {
-        return 0;
+        return collectionMapper.update(collectionModel);
     }
 
+
     @Override
-    public int delete(CollectionModel collectionModel) {
-        return 0;
+    public int delete(int id) {
+        return collectionMapper.delete(id);
     }
 }

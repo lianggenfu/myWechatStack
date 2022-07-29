@@ -26,5 +26,5 @@ public interface CollectionService {
     /*
      * 删除用户收集表
      * */
-    int delete(CollectionModel collectionModel);
+    int delete(int id);
 }

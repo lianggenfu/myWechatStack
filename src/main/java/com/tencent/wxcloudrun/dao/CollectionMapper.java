@@ -11,9 +11,9 @@ public interface CollectionMapper {
 
     int insert(@Param("model") CollectionModel model);
 
-    List<CollectionModel> queryUserCollectByUserId(@Param("userId") String userId);
+    List<CollectionModel> selectByUserId(@Param("userId") String userId);
 
-    void upsertCount(@Param("model") CollectionModel model);
+    int update(@Param("model") CollectionModel model);
 
-    void delete(@Param("model") CollectionModel model);
+    int delete(@Param("id") int id);
 }

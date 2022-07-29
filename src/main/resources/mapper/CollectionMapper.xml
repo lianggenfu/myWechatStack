@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.tencent.wxcloudrun.dao.CollectionMapper">
 
-   <!-- <resultMap id="countersMapper" type="com.tencent.wxcloudrun.model.CollectionModel">
+    <resultMap id="collectionMapper" type="com.tencent.wxcloudrun.model.CollectionModel">
         <id property="id" column="id"/>
         <result property="userId" column="user_id"/>
         <result property="nameId" column="name_id"/>
@@ -10,23 +10,27 @@
         <result property="desc" column="desc"/>
     </resultMap>
 
-    <select id="getCounter" resultMap="countersMapper" parameterType="java.lang.Integer">
-        SELECT `id`, `count`, `createdAt`, `updatedAt`
-        FROM Counters
-        WHERE id = #{id}
+    <select id="selectByUserId" resultMap="collectionMapper" parameterType="java.lang.String">
+        SELECT `id`, `userId`, `nameId`, `fullName`, `desc`
+        FROM t_collection
+        WHERE user_id = #{userId}
     </select>
 
-    <delete id="clearCount" parameterType="java.lang.Integer">
+   <insert id="insert" parameterType="com.tencent.wxcloudrun.model.CollectionModel">
+      INSERT INTO `t_collection`(`userId`, `nameId`, `fullName`, `desc`)
+      VALUE( #{userId},#{nameId},#{fullName},#{desc})
+   </insert>
+
+    <delete id="delete" parameterType="java.lang.Integer">
         DELETE
-        FROM Counters
+        FROM t_collection
         where id = #{id}
         limit 1
     </delete>
 
-    <update id="upsertCount" parameterType="com.tencent.wxcloudrun.model.Counter">
-        INSERT INTO `Counters`(`id`, `count`)
-        VALUE(#{id}, #{count})
-        ON DUPLICATE KEY UPDATE count=#{count}
-    </update>-->
+    <update id="update" parameterType="com.tencent.wxcloudrun.model.CollectionModel">
+        update `t_collection` set user_id = #{userId},name_id = #{nameId},full_name = #{fullName},desc = #{desc}
+       where id = #{id} and user_id = #{userId}
+    </update>
 
 </mapper>
