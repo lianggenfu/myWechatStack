@@ -9,11 +9,11 @@ import java.util.List;
 @Mapper
 public interface CollectionMapper {
 
-    int insert(@Param("model") CollectionModel model);
+    int insert(CollectionModel model);
 
     List<CollectionModel> selectByUserId(@Param("userId") String userId);
 
-    int update(@Param("model") CollectionModel model);
+    int update(CollectionModel model);
 
     int delete(@Param("id") int id);
 }

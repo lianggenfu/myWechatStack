@@ -11,13 +11,13 @@
     </resultMap>
 
     <select id="selectByUserId" resultMap="collectionMapper" parameterType="java.lang.String">
-        SELECT `id`, `userId`, `nameId`, `fullName`, `desc`
+        SELECT `id`, `user_id`, `name_id`, `full_name`, `desc`
         FROM t_collection
         WHERE user_id = #{userId}
     </select>
 
    <insert id="insert" parameterType="com.tencent.wxcloudrun.model.CollectionModel">
-      INSERT INTO `t_collection`(`userId`, `nameId`, `fullName`, `desc`)
+      INSERT INTO `t_collection`(`user_id`, `name_id`, `full_name`, `desc`)
       VALUE( #{userId},#{nameId},#{fullName},#{desc})
    </insert>
 
