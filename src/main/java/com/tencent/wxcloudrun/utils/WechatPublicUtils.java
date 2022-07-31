@@ -32,7 +32,7 @@ public class WechatPublicUtils {
         }
         content = null;
         // sha1加密后的字符串与signature对比
-        return tmpStr != null ? tmpStr.equals(signature.toUpperCase()) : false;
+        return tmpStr != null && tmpStr.equals(signature.toUpperCase());
     }
 
     private static String byteToStr(byte[] byteArray) {

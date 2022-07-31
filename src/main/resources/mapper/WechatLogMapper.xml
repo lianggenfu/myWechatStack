@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tencent.wxcloudrun.dao.WeChatLogMapper">
+
+
+   <insert id="insert" parameterType="com.tencent.wxcloudrun.model.WeChatLog">
+      INSERT INTO `t_wechat_log`(`user_id`, `context`, `msg_type`, `event`, `user_name`)
+      VALUE( #{userId},#{context},#{msgType},#{event},#{userName})
+   </insert>
+
+
+</mapper>

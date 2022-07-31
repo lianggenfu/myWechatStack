@@ -3,6 +3,7 @@ package com.tencent.wxcloudrun.service.impl;
 import com.tencent.wxcloudrun.model.TextMessage;
 import com.tencent.wxcloudrun.service.NameGenerationService;
 import com.tencent.wxcloudrun.service.WxService;
+import com.tencent.wxcloudrun.utils.WeChatUtils;
 import com.tencent.wxcloudrun.utils.XmlUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,7 +66,7 @@ public class WxServiceImpl implements WxService {
         textMessage.setCreateTime(System.currentTimeMillis());
         textMessage.setMsgType("text");
         textMessage.setContent(getContentByReq(map.get("Content").toString()));
-        return getXmlString(textMessage);
+        return WeChatUtils.getXmlString(textMessage);
     }
 
     private String getContentByReq(String content) {
@@ -74,14 +75,14 @@ public class WxServiceImpl implements WxService {
         }
         try {
             if (content.contains(",")) {
-                String[] strs = content.split(",");
+                String[] strs = content.split("，");
                 if (strs[1].equals("男")) {
                     return nameGenerationService.getName(strs[0], 1, 1).get(0);
                 } else if (strs[1].equals("女")) {
                     return nameGenerationService.getName(strs[0], 2, 1).get(0);
                 } else {
                     return "格式异常！\n" +
-                            "eg: 梁,女";
+                            "eg: 梁，女";
                 }
             }
         }catch (Exception e){
@@ -108,30 +109,7 @@ public class WxServiceImpl implements WxService {
                 "\n" +
                 "或，" +
                 "<a href='"  + "'>点击这里立即完成注册</a>");
-        return getXmlString(textMessage);
+        return WeChatUtils.getXmlString(textMessage);
     }
 
-    public String getXmlString(TextMessage textMessage) {
-        String xml = "";
-        if (textMessage != null) {
-            xml = "<xml>";
-            xml += "<ToUserName><![CDATA[";
-            xml += textMessage.getToUserName();
-            xml += "]]></ToUserName>";
-            xml += "<FromUserName><![CDATA[";
-            xml += textMessage.getFromUserName();
-            xml += "]]></FromUserName>";
-            xml += "<CreateTime>";
-            xml += textMessage.getCreateTime();
-            xml += "</CreateTime>";
-            xml += "<MsgType><![CDATA[";
-            xml += textMessage.getMsgType();
-            xml += "]]></MsgType>";
-            xml += "<Content><![CDATA[";
-            xml += textMessage.getContent();
-            xml += "]]></Content>";
-            xml += "</xml>";
-        }
-        return xml;
-    }
 }
