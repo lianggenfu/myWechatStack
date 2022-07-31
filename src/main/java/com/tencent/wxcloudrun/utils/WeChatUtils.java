@@ -9,6 +9,8 @@ import com.tencent.wxcloudrun.model.TextMessage;
 * */
 public class WeChatUtils {
 
+
+
     public static String getXmlString(TextMessage textMessage) {
         String xml = "";
         if (textMessage != null) {

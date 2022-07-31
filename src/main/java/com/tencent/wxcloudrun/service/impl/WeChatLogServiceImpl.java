@@ -18,6 +18,10 @@ public class WeChatLogServiceImpl implements WeChatLogService {
     @Autowired
     private WeChatLogMapper weChatLogMapper;
 
+    /*
+    * 新增对话日志
+    *
+    * */
 
     @Override
     public void addLog(WeChatLog weChatLog) {

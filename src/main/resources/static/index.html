@@ -216,15 +216,33 @@
 
       <div class="weui-cell__bd">
         <span class="weui-label">姓氏:</span>
-        <input id="js_input1" class="weui-input" value= "梁" placeholder="请输入姓氏">
+        <input id="js_input1" class="weui-input" value= "梁" style="text-align: center;" placeholder="请输入姓氏">
       </div>
     </label>
     <p></p>
     <label for="js_input3" class="weui-cell weui-cell_active weui-cell_readonly">
 
-      <div class="weui-cell__bd">
+      <!--<div class="weui-cell__bd">
         <span class="weui-label">性别:</span>
-        <input id="js_input2" class="weui-input" value= "女" placeholder="请输入性别">
+        <input id="js_input2" class="weui-input" value= "女" style="text-align: center;"  placeholder="请输入性别">
+      </div>-->
+      <div class="weui-cell__bd">
+        <span class="weui-label" style="color: brown">性别:</span>
+        <label class="weui-cell weui-cell_active weui-check__label" for="x11">
+          <div class="weui-cell__ft" style="width: 90px;">
+            <span style="color: #576B95">男孩名</span>
+            <input type="radio" name="radio1" class="weui-check" value="1" id="x11" checked="checked">
+            <span class="weui-icon-checked"></span>
+          </div>
+        </label>
+        <label class="weui-cell weui-cell_active weui-check__label" for="x12">
+          <div class="weui-cell__ft" style="width: 90px;">
+            <span style="color: #576B95">女孩名</span>
+            <input type="radio" name="radio1" class="weui-check" value="2" id="x12">
+            <span class="weui-icon-checked"></span>
+          </div>
+        </label>
+        <!-- <input id="js_input2" class="weui-input" value= "女" style="text-align: center;"  placeholder="请输入性别"> -->
       </div>
     </label>
 
@@ -233,7 +251,7 @@
 
       <div class="weui-cell__bd">
         <span class="weui-label">数量:</span>
-        <input id="js_input3" class="weui-input" value= "1" placeholder="请输入数量" readonly="true">
+        <input id="js_input3" class="weui-input" value= "1" style="text-align: center;"  placeholder="请输入数量" readonly="true">
       </div>
     </label>
 
@@ -243,23 +261,12 @@
 
       <span class="count-text">
         <span style="margin-right: 16px;">生成的姓名:</span>
-        <span class="count-number"></span>
-      </span>
+        <span class="count-number" style="font-size: 25px;text-align: center;margin: auto;margin-left: 40px;"></span>
+	  </span>
 
-      <!--<div class="weui-cells__group weui-cells__group_form">
-        <div class="weui-cells__title"></div>
-        <div class="weui-cells weui-cells_form">
-          <div class="weui-cell weui-cell_active">
-            <div class="weui-cell__bd">
-              <textarea id="weui-textarea" placeholder="生成的姓名" rows="15"></textarea>
-            </div>
-          </div>
-        </div>
-      </div>-->
-
-    </div>
     </div>
   </div>
+</div>
 </div>
 </body>
 <script src="https://mat1.gtimg.com/www/asset/lib/jquery/jquery/jquery-1.11.1.min.js"></script>
@@ -269,7 +276,13 @@
 
   function set(action) {
       var surName = document.getElementById("js_input1").value;
-	  var sexType = document.getElementById("js_input2").value;
+	  var obj  = document.getElementsByName("radio1");
+	  var value = null;
+	  for(var i = 0; i<obj .length; i++){
+		  if(obj[i].checked){
+			  value = obj[i].value;
+		  }
+	  }
 	  var number = document.getElementById("js_input3").value;
     $.ajax("/api/getName", {
       method: "POST",
@@ -277,7 +290,7 @@
       dataType: "json",
       data: JSON.stringify({
         surName: surName,
-		sexType: sexType,
+		sexType: value,
 		number: number,
       }),
       success: function(res){

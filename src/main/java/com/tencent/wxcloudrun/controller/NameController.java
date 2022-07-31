@@ -41,12 +41,12 @@ public class NameController {
             apiResponse.setErrorMsg("性别不能为空!");
             apiResponse.setCode(-120002);
             return apiResponse;
-        }else if(!sexType.equals("男") && !sexType.equals("女")){
+        }else if(!sexType.equals("1") && !sexType.equals("2")){
             apiResponse.setErrorMsg("性别输入不合法!");
             apiResponse.setCode(-120003);
             return apiResponse;
         }
-        int sexTypeInt = sexType.equals("男")?1:2; //1:男孩 2:女孩
+        int sexTypeInt = Integer.valueOf(sexType); //1:男孩 2:女孩
         List<String> names = nameGenerationService.getName(surName,sexTypeInt,request.getNumber());
         for (int i = 0; i <names.size() ; i++) {
             //System.out.println("随机生成的第"+(i+1)+"个姓名为：" + names.get(i));

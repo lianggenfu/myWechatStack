@@ -10,6 +10,10 @@ public class NamerRequest {
 
     private String sexType;
 
+    private String boyValue;
+
+    private String girlValue;
+
     private int number;
 
 

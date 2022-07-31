@@ -8,7 +8,7 @@ public interface WeChatSessionMapper {
 
     int addSession(WeChatSession session);
 
-    int querySessionByUserId(String userId);
+    WeChatSession querySessionByUserId(String userId);
 
     int updateSessionByUserId(WeChatSession session);
 

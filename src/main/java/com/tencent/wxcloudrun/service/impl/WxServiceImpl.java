@@ -1,7 +1,10 @@
 package com.tencent.wxcloudrun.service.impl;
 
 import com.tencent.wxcloudrun.model.TextMessage;
+import com.tencent.wxcloudrun.model.WeChatLog;
 import com.tencent.wxcloudrun.service.NameGenerationService;
+import com.tencent.wxcloudrun.service.WeChatLogService;
+import com.tencent.wxcloudrun.service.WeChatSessionService;
 import com.tencent.wxcloudrun.service.WxService;
 import com.tencent.wxcloudrun.utils.WeChatUtils;
 import com.tencent.wxcloudrun.utils.XmlUtils;
@@ -24,6 +27,12 @@ public class WxServiceImpl implements WxService {
     @Autowired
     private NameGenerationService nameGenerationService;
 
+    @Autowired
+    private WeChatLogService weChatLogService;
+
+    @Autowired
+    private WeChatSessionService weChatSessionService;
+
     @Override
     public void handleEvent(HttpServletRequest request, HttpServletResponse response) {
         InputStream inputStream = null;
@@ -34,6 +43,7 @@ public class WxServiceImpl implements WxService {
             String userName = (String) map.get("ToUserName");
             String event = (String) map.get("event");
             String msgType = (String) map.get("MsgType");
+            addLog(userOpenId,userName,event,msgType,map.get("content").toString());
             if("text".equals(msgType)){
                 logger.info("接收到了事件！！userOpenId:{},userName:{},event:{},msgType:{}",userOpenId,userName,event,msgType);
                 String ticket = (String) map.get("Ticket");
@@ -43,7 +53,7 @@ public class WxServiceImpl implements WxService {
             }else if("event".equals(msgType)){
                 logger.info("接收到了事件！！");
             }
-            logger.info("接收参数：{}", map);
+            //logger.info("接收参数：{}", map);
         }catch (IOException e){
             logger.info("处理微信公众号请求异常: ",e);
             e.printStackTrace();
@@ -58,6 +68,19 @@ public class WxServiceImpl implements WxService {
         }
     }
 
+    /*
+     * 收集对话日志
+     * */
+    private void addLog(String userOpenId, String userName, String event, String msgType,String content) {
+        WeChatLog weChatLog = new WeChatLog();
+        weChatLog.setUserId(userOpenId);
+        weChatLog.setUserName(userName);
+        weChatLog.setMsgType(msgType);
+        weChatLog.setContext(content);
+        weChatLog.setEvent(event);
+        weChatLogService.addLog(weChatLog);
+    }
+
     private String handleEventSubscribe(Map<String, Object> map, String userOpenId) {
         logger.info("---开始封装xml---:" + map.toString());
         TextMessage textMessage = new TextMessage();
@@ -69,7 +92,12 @@ public class WxServiceImpl implements WxService {
         return WeChatUtils.getXmlString(textMessage);
     }
 
-    private String getContentByReq(String content) {
+    public String getContentByReq(String content){
+        if("功能".equals(content)){
+            return "1.取名 \n" +
+                   "2.<a href='\"https://springboot-jhx8-1412-4-1313045077.sh.run.tcloudbase.com/index.html\"'>取名工具 </a> \n" +
+                   "回复相应功能使用！";
+        }
         if("取名".equals(content)){
             return "请输入姓氏,性别(逗号隔开)";
         }
@@ -89,13 +117,28 @@ public class WxServiceImpl implements WxService {
             logger.error("异常对话：{}",content);
             e.printStackTrace();
         }
-        if("取名内测链接".equals(content)){
-            return "取名链接: "+ "https://springboot-jhx8-1412-4-1313045077.sh.run.tcloudbase.com/index.html";
+        if("取名链接".equals(content)){
+            return "取名链接: "+"<a href='\"https://springboot-jhx8-1412-4-1313045077.sh.run.tcloudbase.com/index.html\"'>取名工具 </a>";
         }
-        return "欢迎关注eather_liang!";
+        return "欢迎关注eather_liang!回复 \"功能\"获取公众号功能列表";
     }
 
-    private String handleEventSubscribe2(Map<String, Object> map, String userOpenId) {
+    private String getFunctionByUserIdAndContent(String fromUserName, String content) {
+
+        //weChatSessionService.
+
+       /* switch (content){
+            case "取名": return generationName(fromUserName);break;
+            case "笑话": return takeAJoke();break;
+            case "我的收藏" : return myCollection(fromUserName);break;
+            case "带排期" : return "敬请期待!!";break;
+            default: return "欢迎关注eather_liang!查看功能请回复\"功能\"";
+        }*/
+        return null;
+    }
+
+
+    /*private String handleEventSubscribe2(Map<String, Object> map, String userOpenId) {
         logger.info("---开始封装xml---:" + map.toString());
         TextMessage textMessage = new TextMessage();
         textMessage.setToUserName(map.get("FromUserName").toString());
@@ -110,6 +153,6 @@ public class WxServiceImpl implements WxService {
                 "或，" +
                 "<a href='"  + "'>点击这里立即完成注册</a>");
         return WeChatUtils.getXmlString(textMessage);
-    }
+    }*/
 
 }

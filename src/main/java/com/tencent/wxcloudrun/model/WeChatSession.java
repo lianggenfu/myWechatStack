@@ -1,5 +1,9 @@
 package com.tencent.wxcloudrun.model;
 
+
+import lombok.Data;
+
+@Data
 public class WeChatSession {
 
     private int id;
