@@ -39,6 +39,7 @@ public class WxServiceImpl implements WxService {
         try{
             inputStream = request.getInputStream();
             Map<String,Object> map = XmlUtils.xmlToMap(inputStream);
+            logger.info("handleEvent map is :{}",map);
             String userOpenId = (String) map.get("FromUserName");
             String userName = (String) map.get("ToUserName");
             String event = (String) map.get("event");
