@@ -46,6 +46,15 @@ public class NameController {
             apiResponse.setCode(-120003);
             return apiResponse;
         }
+        if(request.getNumber()<=0){
+            apiResponse.setErrorMsg("数量不在有效范围[1,50]!");
+            apiResponse.setCode(-120004);
+            return apiResponse;
+        }else if(request.getNumber()>50){
+            apiResponse.setErrorMsg("一次生成数量不能超过50!");
+            apiResponse.setCode(-120005);
+            return apiResponse;
+        }
         int sexTypeInt = Integer.valueOf(sexType); //1:男孩 2:女孩
         List<String> names = nameGenerationService.getName(surName,sexTypeInt,request.getNumber());
         for (int i = 0; i <names.size() ; i++) {

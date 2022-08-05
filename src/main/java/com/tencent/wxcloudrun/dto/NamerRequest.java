@@ -14,7 +14,7 @@ public class NamerRequest {
 
     private String girlValue;
 
-    private int number;
+    private int number = 1;
 
 
 }
