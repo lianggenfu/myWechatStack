@@ -251,7 +251,7 @@
 
       <div class="weui-cell__bd">
         <span class="weui-label">数量:</span>
-        <input id="js_input3" class="weui-input" value= "1" style="text-align: center;"  placeholder="请输入数量">
+        <input id="js_input3" class="weui-input" value= "10" style="text-align: center"  placeholder="请输入数量">
       </div>
     </label>
 
@@ -302,6 +302,7 @@
           }else if (res && res.data !== undefined) {
              <!--$(".count-number").html(res.data);-->
 			 let list = res.data;
+			 $(".count-number").html("");
 			 for(var i=0; i<list.length;i++){
 				 a='<div class="meg1">';
 				 a += '<p class="name">'
