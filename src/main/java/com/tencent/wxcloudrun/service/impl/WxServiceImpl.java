@@ -43,7 +43,7 @@ public class WxServiceImpl implements WxService {
             String userName = (String) map.get("ToUserName");
             String event = (String) map.get("event");
             String msgType = (String) map.get("MsgType");
-            addLog(userOpenId,userName,event,msgType,map.get("content").toString());
+            addLog(userOpenId,userName,event,msgType,map.get("Content").toString());
             if("text".equals(msgType)){
                 logger.info("接收到了事件！！userOpenId:{},userName:{},event:{},msgType:{}",userOpenId,userName,event,msgType);
                 String ticket = (String) map.get("Ticket");
