@@ -55,6 +55,10 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.3.2</version><!--版本号-->
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
 
         <!-- redis -->
         <!--<dependency>
