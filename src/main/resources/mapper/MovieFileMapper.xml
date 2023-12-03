@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tencent.wxcloudrun.dao.MovieFileMapper">
+
+    <resultMap id="movieFileModel" type="com.tencent.wxcloudrun.model.MovieFile">
+        <id property="id" column="id"/>
+        <result property="movieName" column="movie_name"/>
+        <result property="movieSize" column="movie_size"/>
+        <result property="movieSizeGb" column="movie_size_gb"/>
+        <result property="movieNo" column="movie_no"/>
+        <result property="groups" column="groups"/>
+        <result property="isMosaic" column="is_mosaic"/>
+        <result property="filePath" column="file_path"/>
+        <result property="absolutePath" column="absolute_path"/>
+        <result property="actors" column="actors"/>
+    </resultMap>
+
+    <select id="selectListByMovieName" resultMap="list" parameterType="java.lang.String">
+        SELECT `id`,movie_name`, `movie_size`, `movie_size_gb`, `movie_no`, `groups`, `is_mosaic`, `file_path`, `absolute_path`, `actors`
+        FROM t_movie_file
+        WHERE movie_name like #{movieName}
+    </select>
+
+    <select id="selectListByGroups" resultMap="list" parameterType="java.lang.String">
+        SELECT `id`,movie_name`, `movie_size`, `movie_size_gb`, `movie_no`, `groups`, `is_mosaic`, `file_path`, `absolute_path`, `actors`
+        FROM t_movie_file
+        WHERE movie_name like #{groups}
+    </select>
+
+    <select id="selectItemByMovieNo" resultMap="movieFileModel" parameterType="java.lang.String">
+        SELECT `id`,movie_name`, `movie_size`, `movie_size_gb`, `movie_no`, `groups`, `is_mosaic`, `file_path`, `absolute_path`, `actors`
+        FROM t_movie_file
+        WHERE movie_no = #{movieNo}
+    </select>
+
+   <insert id="insert" parameterType="com.tencent.wxcloudrun.model.MovieFile">
+      INSERT INTO `t_movie_file`(`movie_name`, `movie_size`, `movie_size_gb`, `movie_no`, `groups`, `is_mosaic`, `file_path`, `absolute_path`, `actors`)
+      VALUE( #{movieName},#{movieSize},#{movieSizeGb},#{movieNo},#{groups},#{isMosaic},#{filePath},#{absolutePath},#{actors})
+   </insert>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE
+        FROM t_movie_file
+        where id = #{id}
+        limit 1
+    </delete>
+
+    <update id="update" parameterType="com.tencent.wxcloudrun.model.MovieFile">
+        update `t_movie_file` set movie_name = #{movieName},movie_no = #{movieNo}
+       where id = #{id}
+    </update>
+
+</mapper>
